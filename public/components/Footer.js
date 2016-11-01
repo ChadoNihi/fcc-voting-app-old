@@ -1,4 +1,4 @@
-const Footer = ()=>
+export default ()=>
   <footer className="mdl-mini-footer">
     <div className="mdl-mini-footer--left-section">
       <ul className="mdl-mini-footer--link-list">

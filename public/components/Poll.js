@@ -1,1 +1,3 @@
-const React = require('');
+export default ( {title} )=> {
+  return ;
+}

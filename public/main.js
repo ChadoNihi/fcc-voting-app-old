@@ -1,12 +1,10 @@
-const React = require('react'),
-      render = require('react-dom').render,
-      IndexRoute = require('react-router').IndexRoute,
-      Router = require('react-router').Router,
-      Route = require('react-router').Route,
-      browserHistory = require('react-router').browserHistory,
+import React from 'react';
+import { render } from 'react-dom';
+import {browserHistory, IndexRoute, Route, Router} from 'react-router');
 
-      App = require('./modules/App'),
-      Polls = require('./modules/Repos');
+import App from './public/components/App');
+import About from './public/components/About');
+import Polls from './public/components/Polls');
 
 render((
   <Router history={browserHistory}>
