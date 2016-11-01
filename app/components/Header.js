@@ -9,8 +9,9 @@ export default ({isAuth, title})=>
         <div class="mdl-layout-spacer"></div>
         <!-- Navigation. We hide it in small screens. -->
         <nav class="mdl-navigation mdl-layout--large-screen-only">
-          <Link to="/" className="mdl-navigation__link">Log In</Link>
-          <Link to="/" className="mdl-navigation__link">Sign Up</Link>
+          <span>Log In with =>></span>
+          <Link to="/" className="mdl-navigation__link">Log In w/ <i className="fa fa-twitter fa-lg" aria-hidden="true"></i></Link>
+          <Link to="/" className="mdl-navigation__link"><i className="fa fa-github fa-lg" aria-hidden="true"></i></Link>
         </nav>
       </div>
     </header>

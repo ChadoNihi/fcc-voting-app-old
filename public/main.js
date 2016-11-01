@@ -1,46 +1,47 @@
 import React from 'react';
 import { render } from 'react-dom';
 import {browserHistory, IndexRoute, Route, Router} from 'react-router');
-import createStore from 'redux';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
 import update from 'immutability-helper');
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
-import App from './public/components/App');
-import About from './public/components/About');
-import Polls from './public/components/Polls');
+import App from 'app/components/App');
+import About from 'app/components/About');
+import Polls from 'app/components/Polls');
 
-import ActionCreators from 'app/action-creators.js'
+import mainReducer from 'app/reducers/mainReducer.js'
+import { getPolls } from 'app/controllers/pollsController.js';
+import { addUser } from 'app/actions.js';
 
-const getUserInit = ()=> {
+/*const getUserInit = ()=> {
   if (req.isAuthenticated()) {
-
+    //ActionCreators.addUser();
   } else {
-
-  }
-};
-
-let initState = {
-      user: {
-        authParty: null,
+    //db
+    addUser({
+        provider: null,
         id: null,
-        name: "an anon voter",
+        displayName: "an anon voter",
       },
       pools: getPolls()
-    },
-    reducer = (state = initState, action)=> {
-      switch (action.type) {
-        case 'ADD_POLL':
-          return update(state, {polls, {push: action.poll}});
-        default:
-          return state;
-      }
-    },
-    store = createStore(reducer);
+    });
+  }
+};*/
+
+const store = createStore(
+combineReducers({
+  global: mainReducer,
+  routing: routerReducer
+}));
+
+const history = syncHistoryWithStore(browserHistory, store);
 
 render((
-  <Router history={browserHistory}>
+  <Provider store={store}><Router history={history}>
     <Route path="/" component={App}>
       <IndexRoute component={Polls} />
       <Route path="/about" component={About} />
     </Route>
-  </Router>
+  </Router></Provider>
 ), document.getElementById('root'));
