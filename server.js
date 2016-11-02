@@ -1,7 +1,6 @@
 'use strict';
 
 var express = require('express');
-var routes = require('./app/routes/index.js');
 var mongo = require("mongodb").MongoClient,
 var passport = require('passport');
 var session = require('express-session');
@@ -33,7 +32,32 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-routes(app, passport);
+app.get('*', (req, res) => {
+  match({ routes, location: req.url }, (err, redirect, props) => {
+    if (err) {
+      res.status(500).send(err.message)
+    } else if (redirect) {
+      res.redirect(redirect.pathname + redirect.search)
+    } else if (props) {
+      const appHtml = renderToString(<RouterContext {...props}/>)
+      res.send(renderPage(appHtml))
+    } else {
+      res.status(404).send('Not Found')
+    }
+  })
+})
+
+function renderPage(appHtml) {
+  return `
+    <!doctype html public="storage">
+    <html>
+    <meta charset=utf-8/>
+    <title>My First React Router App</title>
+    <link rel=stylesheet href=/index.css>
+    <div id=app>${appHtml}</div>
+    <script src="/bundle.js"></script>
+   `
+}
 
 var port = process.env.PORT || 8080;
 app.listen(port,  function () {

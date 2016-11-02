@@ -27,7 +27,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-  return state;
+  return {
+    polls: state.polls,
+    user: state.user
+  };
 }
 
 const TheApp = connect(
