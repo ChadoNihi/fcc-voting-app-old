@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {} from '';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class App extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    testClick: () => dispatch(CounterActions("Add"))
+    addPoll: () => dispatch(addPoll())
   }
 }
 
@@ -32,6 +33,6 @@ const mapStateToProps = (state) => {
 const TheApp = connect(
     mapStateToProps,
     mapDispatchToProps
-)(App)
+)(App);
 
 export default TheApp;

@@ -1,5 +1,7 @@
 /*
 * action creators
 */
-export addUser = (userO)=>
-  ({type: 'ADD_USER', user: userO});
+export addPoll = (poll)=>
+  ({type: 'ADD_POLL', poll});
+export addUser = (user)=>
+  ({type: 'ADD_USER', user: user});
