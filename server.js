@@ -4,6 +4,8 @@ var express = require('express');
 var mongo = require("mongodb").MongoClient,
 var passport = require('passport');
 var session = require('express-session');
+var bodyParser = require('body-parser');
+var validatePoll = require(process.cwd() + '/utils').validatePoll;
 
 var app = express();
 var db;
@@ -16,9 +18,11 @@ mongo.connect(process.env.MONGO_URI, (err, mdb)=> {
 		throw err;
 	} else {
 		db = mdb;
+		exports.db = db;
 	}
 });
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
@@ -32,6 +36,25 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.route('/auth/github')
+	.get(passport.authenticate('github'));
+app.route('/auth/github/callback')
+	.get(passport.authenticate('github', {
+		successRedirect: '/',
+		failureRedirect: '/',
+		failureFlash: true
+	}));
+
+app.route('/auth/twitter')
+	.get(passport.authenticate('twitter'));
+app.route('/auth/twitter/callback')
+	.get(passport.authenticate('github', {
+		successRedirect: '/',
+		failureRedirect: '/',
+		failureFlash: true
+	}));
+
+
 app.get('/polls-api', (req, res) => {
 	if (err) {
 		res.status(500).send(err.message)
@@ -40,31 +63,43 @@ app.get('/polls-api', (req, res) => {
 			if (err) {
 				res.status(500).send(err.message)
 			} else {
-				res.send(polls);
+				res.json(polls);
 			}
 		});
 	}
+});
+
+app.get('/user-api', (req, res) => {
+	if (req.user) {
+    res.json();
+  } else {
+    res.redirect('/login');
+  }
 });
 
 app.post('/poll', (req, res) => {
 	if (err) {
 		res.status(500).send(err.message)
 	} else {
-		let poll = ;
-		db.collection('polls').insert(poll, (err, poll)=> {
-			if (err) {
-				res.status(500).send(err.message)
-			} else {
-				res.send(poll);
-			}
-		});
+		let poll = req.body;
+		if (validatePoll(poll)) {
+			db.collection('polls').insert(poll, (err, poll)=> {
+				if (err) {
+					res.status(500).send(err.message)
+				} else {
+					res.send(poll);
+				}
+			});
+		} else {
+			res.status(400).send("Error: wrong poll format.");
+		}
 	}
 });
 
 app.get('*', (req, res) => {
   match({ routes, location: req.url }, (err, redirect, props) => {
     if (err) {
-      res.status(500).send(err.message)
+      res.status(500).send(err.message);
     } else if (redirect) {
       res.redirect(redirect.pathname + redirect.search)
     } else if (props) {

@@ -1,7 +1,9 @@
 'use strict';
 
 var GitHubStrategy = require('passport-github').Strategy;
-var User = require('../models/users');
+var TwitterStrategy = require('passport-twitter').Strategy;
+//var User = require('../models/users');
+var db = require(process.cwd() + '/server').db;
 var configAuth = require('./auth');
 
 module.exports = function (passport) {
@@ -10,7 +12,7 @@ module.exports = function (passport) {
 	});
 
 	passport.deserializeUser(function (id, done) {
-		User.findById(id, function (err, user) {
+		db.collection('users').findOne()id, function (err, user) {
 			done(err, user);
 		});
 	});

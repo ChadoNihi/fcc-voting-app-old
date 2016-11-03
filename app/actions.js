@@ -5,12 +5,12 @@ import Axios from 'axios';
 */
 export const addPollSuccess = (poll)=>
   ({type: 'ADD_POLL', poll});
-export const addUser = (user)=>
+export const addUserSuccess = (user)=>
   ({type: 'ADD_USER', user});
 export const fetchPollsSuccess = (polls)=>
   ({type: 'SET_POLLS', polls});
 export const setErr = (err)=>
-  ({type: 'SET_ERR', err: 'Failed to load polls: "'+err+'"\nTry to refresh the page.'});
+  ({type: 'SET_ERR', err});
 
 export const fetchPolls = () => {
   // Returns a dispatcher function
@@ -22,6 +22,22 @@ export const fetchPolls = () => {
         // Dispatch another action
         // to consume data
         dispatch(fetchPollsSuccess(response.data));
+      })
+      .catch(error => {
+        dispatch(setErr(response.data))
+      });
+  };
+};
+export const fetchUser = () => {
+  // Returns a dispatcher function
+  // that dispatches an action at a later time
+  return (dispatch) => {
+    // Returns a promise
+    return Axios.get(appUrl+'/user-api')
+      .then(response => {
+        // Dispatch another action
+        // to consume data
+        dispatch(addUserSuccess(response.data));
       })
       .catch(error => {
         dispatch(setErr(response.data))
