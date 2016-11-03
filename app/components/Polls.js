@@ -1,8 +1,14 @@
 import { Link } from 'react-router';
 
 export default ({polls})=>
-  <div>
+  <ul className='mdl-list'>
     {polls.map(poll, i)=>{
-      return <Link to={'/poll/'+poll.id} key={i} >{poll.title}</Link>;
+      return (
+        <li className='mdl-list__item'>
+          <span className='mdl-list__item-primary-content'>
+            <Link to={'/poll/'+poll.id} key={i}>{poll.title}</Link>
+          </span>
+        </li>
+      );
     }}
-  </div>;
+  </ul>;

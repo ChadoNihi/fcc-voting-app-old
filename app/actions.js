@@ -3,11 +3,16 @@ import Axios from 'axios';
 /*
 * action creators
 */
-export addPoll = (poll)=>
+export const addPoll = (poll)=>
   ({type: 'ADD_POLL', poll});
-export addUser = (user)=>
-  ({type: 'ADD_USER', user: user});
-export const fetchBooks = () => {
+export const addUser = (user)=>
+  ({type: 'ADD_USER', user});
+export const fetchPollsSuccess = (polls)=>
+  ({type: 'SET_POLLS', polls});
+export const setErr = (err)=>
+  ({type: 'SET_ERR', err: 'Failed to load polls: "'+err+'"\nTry to refresh the page.'});
+
+export const fetchPolls = () => {
   // Returns a dispatcher function
   // that dispatches an action at a later time
   return (dispatch) => {
@@ -16,10 +21,10 @@ export const fetchBooks = () => {
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(fetchBooksSuccess(response.data))
+        dispatch(fetchPollsSuccess(response.data));
       })
       .catch(error => {
-        throw(error);
+        dispatch(setErr(response.data))
       });
   };
 };

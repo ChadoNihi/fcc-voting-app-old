@@ -8,5 +8,5 @@ export default ({onSubmit})=>
       <textarea className="mdl-textfield__input" type="text" rows= "3" id="poll-opts-inp" required></textarea>
       <label className="mdl-textfield__label" for="poll-opts-inp">Option per line...</label>
     </div>
-    <button className='' onSubmit={onSubmit}></button>
+    <button className='mdl-button mdl-js-button mdl-button--raised mdl-button--accent' onSubmit={onSubmit} type='submit'>Create</button>
   </form>;

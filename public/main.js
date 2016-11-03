@@ -4,7 +4,6 @@ import {browserHistory, IndexRoute, Route, Router} from 'react-router');
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import update from 'immutability-helper');
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
 import App from 'app/components/App');
