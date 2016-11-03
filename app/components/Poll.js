@@ -1,10 +1,10 @@
-export default ( {title, options} )=> {
+export default ( {title, options, optHist} )=> {
   return (
     <div>
       <h3>{title}</h3>
-      <select>
+      <select required>
         {options.map(opt=>{
-          return <option></option>;
+          return <option>{opt}</option>;
         })}
       </select>
     </div>

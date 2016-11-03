@@ -32,6 +32,35 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/polls-api', (req, res) => {
+	if (err) {
+		res.status(500).send(err.message)
+	} else {
+		db.collection('polls').find().toArray((err, polls)=> {
+			if (err) {
+				res.status(500).send(err.message)
+			} else {
+				res.send(polls);
+			}
+		});
+	}
+});
+
+app.post('/poll', (req, res) => {
+	if (err) {
+		res.status(500).send(err.message)
+	} else {
+		let poll = ;
+		db.collection('polls').insert(poll, (err, poll)=> {
+			if (err) {
+				res.status(500).send(err.message)
+			} else {
+				res.send(poll);
+			}
+		});
+	}
+});
+
 app.get('*', (req, res) => {
   match({ routes, location: req.url }, (err, redirect, props) => {
     if (err) {

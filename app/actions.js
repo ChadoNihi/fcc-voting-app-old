@@ -3,7 +3,7 @@ import Axios from 'axios';
 /*
 * action creators
 */
-export const addPoll = (poll)=>
+export const addPollSuccess = (poll)=>
   ({type: 'ADD_POLL', poll});
 export const addUser = (user)=>
   ({type: 'ADD_USER', user});
@@ -17,11 +17,27 @@ export const fetchPolls = () => {
   // that dispatches an action at a later time
   return (dispatch) => {
     // Returns a promise
-    return Axios.get(apiUrl)
+    return Axios.get(appUrl+'/polls-api')
       .then(response => {
         // Dispatch another action
         // to consume data
         dispatch(fetchPollsSuccess(response.data));
+      })
+      .catch(error => {
+        dispatch(setErr(response.data))
+      });
+  };
+};
+export const postPoll = (poll) => {
+  // Returns a dispatcher function
+  // that dispatches an action at a later time
+  return (dispatch) => {
+    // Returns a promise
+    return Axios.post(appUrl+'/poll', poll)
+      .then(response => {
+        // Dispatch another action
+        // to consume data
+        dispatch(addPollSuccess(response.data));
       })
       .catch(error => {
         dispatch(setErr(response.data))
