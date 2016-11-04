@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {} from '';
 
 class App extends React.Component {
   constructor(props) {
@@ -9,9 +8,9 @@ class App extends React.Component {
 
   render() {
     return (
-      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <Header isAuth={false} title="The Voting App" />
-        <main class="mdl-layout__content">
+      <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <Header isLoggedIn={this.props.user.id} title="The Voting App" />
+        <main className="mdl-layout__content">
           {this.props.children}
           <Footer />
         </main>

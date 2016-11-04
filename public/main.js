@@ -14,6 +14,7 @@ import Polls from 'app/components/Polls';
 import mainReducer from 'app/reducers/mainReducer';
 import { getPolls } from 'app/controllers/pollsController';
 import * as Actions from 'app/actions';
+var css = require('./css/main.styl');
 
 const store = createStore(
 combineReducers({

@@ -54,6 +54,12 @@ app.route('/auth/twitter/callback')
 		failureFlash: true
 	}));
 
+app.get('/logout', function (req, res){
+  req.session.destroy(function (err) {
+    res.redirect('/'); //Inside a callback… bulletproof!
+  });
+});
+
 
 app.get('/polls-api', (req, res) => {
 	if (err) {
