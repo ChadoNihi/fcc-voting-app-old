@@ -5,7 +5,7 @@ var mongo = require("mongodb").MongoClient,
 var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var validatePoll = require(process.cwd() + '/utils').validatePoll;
+var validatePoll = require(process.cwd() + '/app/utils').validatePoll;
 
 var app = express();
 var db;
@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/common', express.static(process.cwd() + '/app/common'));
+app.use(flash());
 
 app.use(session({
 	secret: 'secretClementine',
@@ -56,7 +57,7 @@ app.route('/auth/twitter/callback')
 
 app.get('/logout', function (req, res){
   req.session.destroy(function (err) {
-    res.redirect('/'); //Inside a callback… bulletproof!
+    res.redirect('/');
   });
 });
 
@@ -89,7 +90,7 @@ app.post('/poll', (req, res) => {
 	} else {
 		let poll = req.body;
 		if (validatePoll(poll)) {
-			db.collection('polls').insert(poll, (err, poll)=> {
+			db.collection('polls').insert(Object.assign({}, {user: {usrreq.user.displayName}, time: Date.now()}), (err, poll)=> {
 				if (err) {
 					res.status(500).send(err.message)
 				} else {

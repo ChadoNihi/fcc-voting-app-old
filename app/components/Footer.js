@@ -1,5 +1,5 @@
 export default ()=>
-  <footer className="mdl-mini-footer">
+  <footer className="mdl-mini-footer" style={({padding: "0.5em 1em"})}>
     <div className="mdl-mini-footer--left-section">
       <ul className="mdl-mini-footer--link-list">
         <li>Built by eFish (aka Chado Nihi)</li>

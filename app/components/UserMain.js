@@ -1,4 +1,5 @@
 import Polls from 'app/components/Polls';
+import {postPoll} from 'app/actions';
 
 export default ({displayName, polls})=>
 
@@ -14,8 +15,18 @@ export class UserMain extends React.Component {
     this.setState({isEditing: true});
   }
 
-  onSubmit(title, opts) {
-    
+  onSubmit(ev) {
+    var title = ev.target.elements['poll-title-inp'].value.trim(),
+        opts = ev.target.elements['poll-opts-inp'].value.split('\n').map(opt=> opt.trim());
+    ev.preventDefault();
+
+    if (opts.length>1 && opts.every(opt=>opt.length>0)) {
+      postPoll({
+        title,
+        opts
+      });
+      this.setState({isEditing: false});
+    }
   }
 
   render() {
