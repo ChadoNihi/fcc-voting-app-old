@@ -8,11 +8,11 @@ var configAuth = require('./auth');
 
 module.exports = function (passport) {
 	passport.serializeUser(function (user, done) {
-		done(null, user.id);
+		done(null, user._id);
 	});
 
 	passport.deserializeUser(function (id, done) {
-		db.collection('users').findOne()id, function (err, user) {
+		db.collection('users').findOne(id, function (err, user) {
 			done(err, user);
 		});
 	});
@@ -24,7 +24,7 @@ module.exports = function (passport) {
 	},
 	function (token, refreshToken, profile, done) {
 		process.nextTick(function () {
-			User.findOne({ 'github.id': profile.id }, function (err, user) {
+			db.collection('voting_app_users').findOne({ 'github.id': profile.id }, function (err, user) {
 				if (err) {
 					return done(err);
 				}
@@ -32,23 +32,52 @@ module.exports = function (passport) {
 				if (user) {
 					return done(null, user);
 				} else {
-					var newUser = new User();
 
-					newUser.github.id = profile.id;
-					newUser.github.username = profile.username;
-					newUser.github.displayName = profile.displayName;
-					newUser.github.publicRepos = profile._json.public_repos;
-					newUser.nbrClicks.clicks = 0;
-
-					newUser.save(function (err) {
+					db.collection('voting_app_users').insert({
+						"github.id": profile.id,
+						"github.displayName": profile.displayName,
+						"github.username": profile.username
+					}, (err, result)=> {
 						if (err) {
 							throw err;
 						}
 
-						return done(null, newUser);
+						return done(null, result.ops);
 					});
 				}
 			});
 		});
 	}));
+
+	passport.use(new TwitterStrategy({
+    consumerKey: configAuth.twitterAuth.consumerKey,
+    consumerSecret: configAuth.twitterAuth.consumerSecret,
+    callbackURL: configAuth.twitterAuth.callbackURL
+  },
+	function (token, refreshToken, profile, done) {
+		process.nextTick(function () {
+			db.collection('voting_app_users').findOne({ 'twitter.id': profile.id }, function (err, user) {
+				if (err) {
+					return done(err);
+				}
+
+				if (user) {
+					return done(null, user);
+				} else {
+
+					db.collection('voting_app_users').insert({
+						"twitter.id": profile.id,
+						"twitter.displayName": profile.displayName,
+						"twitter.username": profile.username
+					}, (err, result)=> {
+						if (err) {
+							throw err;
+						}
+
+						return done(null, result.ops);
+					});
+				}
+			});
+		});
+	});
 };

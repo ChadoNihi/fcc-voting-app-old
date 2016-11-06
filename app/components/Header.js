@@ -1,10 +1,11 @@
 import { Link } from 'react-router';
 
-export default ({isLoggedIn, title})=>
+export default ({isLoggedIn, title, subtitle})=>
   <div>
     <header class="mdl-layout__header">
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title"><Link to="/">{title}</Link></span>
+        <span>{subtitle}</span>
         <div class="mdl-layout-spacer"></div>
         <nav class="mdl-navigation">
           {isLoggedIn ? (

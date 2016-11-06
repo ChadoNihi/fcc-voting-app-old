@@ -6,6 +6,8 @@ var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var validatePoll = require(process.cwd() + '/app/utils').validatePoll;
+var loggedIn = require(process.cwd() + '/app/utils').loggedIn;
+var ensureUnauthenticated = require(process.cwd() + '/app/utils').ensureUnauthenticated;
 
 var app = express();
 var db;
@@ -38,6 +40,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.route('/auth/github')
+	.use(ensureUnauthenticated())
 	.get(passport.authenticate('github'));
 app.route('/auth/github/callback')
 	.get(passport.authenticate('github', {
@@ -47,6 +50,7 @@ app.route('/auth/github/callback')
 	}));
 
 app.route('/auth/twitter')
+	.use(ensureUnauthenticated())
 	.get(passport.authenticate('twitter'));
 app.route('/auth/twitter/callback')
 	.get(passport.authenticate('github', {
@@ -78,13 +82,13 @@ app.get('/polls-api', (req, res) => {
 
 app.get('/user-api', (req, res) => {
 	if (req.user) {
-    res.json();
+    res.json(req.user);
   } else {
-    res.redirect('/login');
+    res.json();
   }
 });
 
-app.post('/poll', (req, res) => {
+app.post('/poll', loggedIn, (req, res) => {
 	if (err) {
 		res.status(500).send(err.message)
 	} else {
@@ -120,13 +124,25 @@ app.get('*', (req, res) => {
 
 function renderPage(appHtml) {
   return `
-    <!doctype html public="storage">
-    <html>
-    <meta charset=utf-8/>
-    <title>My First React Router App</title>
-    <link rel=stylesheet href=/index.css>
-    <div id=app>${appHtml}</div>
-    <script src="/bundle.js"></script>
+		<!doctype html>
+		<html lang="en">
+		<head>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="description" content="Voting App for Free Code Camp">
+			<title>Voting App</title>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+			<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue_grey-orange.min.css" />
+			<!--<link href="/public/css/main.css" rel="stylesheet">-->
+			<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+			<script defer src="https://use.fontawesome.com/ade899c041.js"></script>
+			<script defer type="text/javascript" src="common/common.js"></script>
+		</head>
+		<div id='root'>
+			${appHtml}
+			<script src="/public/bundle.js"></script>
+		</div>
+		</html>
    `
 }
 

@@ -7,9 +7,16 @@ class App extends React.Component {
   }
 
   render() {
+    let ch;
+    try {
+      ch = React.Children.only(this.props.children);
+    } catch (e) {
+      ch = undefined;
+    }
+
     return (
       <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <Header isLoggedIn={this.props.user.id} title="The Voting App" />
+        <Header isLoggedIn={this.props.user.id} title="The Voting App" subtitle={(ch && ch.type == "UserMain" ? "Your polls" : undefined)} />
         <main className="mdl-layout__content">
           {this.props.children}
           <Footer />

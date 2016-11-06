@@ -21,10 +21,10 @@ export const fetchPolls = () => {
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(fetchPollsSuccess(response.data));
+        dispatch(fetchPollsSuccess(JSON.parse(response)));
       })
       .catch(error => {
-        dispatch(setErr(response.data))
+        dispatch(setErr(error))
       });
   };
 };
@@ -37,10 +37,10 @@ export const fetchUser = () => {
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(addUserSuccess(response.data));
+        dispatch(addUserSuccess(JSON.parse(response)));
       })
       .catch(error => {
-        dispatch(setErr(response.data))
+        dispatch(setErr(error))
       });
   };
 };
@@ -53,10 +53,11 @@ export const postPoll = (poll) => {
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(addPollSuccess(response.data));
+        dispatch(addPollSuccess(JSON.parse(response)));
+        addPollToUser();//todo
       })
       .catch(error => {
-        dispatch(setErr(response.data))
+        dispatch(setErr(error))
       });
   };
 };
