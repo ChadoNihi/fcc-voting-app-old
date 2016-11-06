@@ -2,7 +2,6 @@
 
 var GitHubStrategy = require('passport-github').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
-//var User = require('../models/users');
 var db = require(process.cwd() + '/server').db;
 var configAuth = require('./auth');
 
@@ -12,7 +11,7 @@ module.exports = function (passport) {
 	});
 
 	passport.deserializeUser(function (id, done) {
-		db.collection('users').findOne(id, function (err, user) {
+		db.collection('voting_app_users').findOne(id, function (err, user) {
 			done(err, user);
 		});
 	});
@@ -34,9 +33,11 @@ module.exports = function (passport) {
 				} else {
 
 					db.collection('voting_app_users').insert({
+						"provider": profile.provider,
 						"github.id": profile.id,
 						"github.displayName": profile.displayName,
-						"github.username": profile.username
+						"github.username": profile.username,
+						'pollIds': []
 					}, (err, result)=> {
 						if (err) {
 							throw err;
@@ -66,9 +67,11 @@ module.exports = function (passport) {
 				} else {
 
 					db.collection('voting_app_users').insert({
+						"provider": profile.provider,
 						"twitter.id": profile.id,
 						"twitter.displayName": profile.displayName,
-						"twitter.username": profile.username
+						"twitter.username": profile.username,
+						'pollIds': []
 					}, (err, result)=> {
 						if (err) {
 							throw err;

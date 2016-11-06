@@ -1,0 +1,9 @@
+addPollToUser()
+store.dispatch(Actions.fetchUser()); with polls?
+polls -> pollsIds?
+
+
+
+--------------------
+poll: id, optHist, voters
+user: ..., polls

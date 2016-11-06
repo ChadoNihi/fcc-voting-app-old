@@ -61,3 +61,19 @@ export const postPoll = (poll) => {
       });
   };
 };
+export const postVote = (pollId, opt) => {
+  // Returns a dispatcher function
+  // that dispatches an action at a later time
+  return (dispatch) => {
+    // Returns a promise
+    return Axios.post(put+'/poll', {_id: pollId, opt})
+      .then(response => {
+        // Dispatch another action
+        // to consume data
+        dispatch(voteSuccess(JSON.parse(response)));
+      })
+      .catch(error => {
+        dispatch(setErr(error))
+      });
+  };
+};

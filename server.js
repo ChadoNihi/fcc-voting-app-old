@@ -82,9 +82,15 @@ app.get('/polls-api', (req, res) => {
 
 app.get('/user-api', (req, res) => {
 	if (req.user) {
-    res.json(req.user);
+		db.collection('voting_app_users').findOne(req.user._id, (err, user)=> {
+			if (err) {
+				res.status(500).send(err.message)
+			} else {
+				res.json(user);
+			}
+		});
   } else {
-    res.json();
+    res.json({});
   }
 });
 
@@ -94,16 +100,37 @@ app.post('/poll', loggedIn, (req, res) => {
 	} else {
 		let poll = req.body;
 		if (validatePoll(poll)) {
-			db.collection('polls').insert(Object.assign({}, {user: {usrreq.user.displayName}, time: Date.now()}), (err, poll)=> {
+			db.collection('polls').insert({
+				userName: {req.user.displayName},
+				title: poll.title
+				optHist: poll.opts.reduce((acc, opt)=> {
+						acc[opt] = 0;
+						return acc;
+					}, {})
+			}, (err, poll)=> {
 				if (err) {
-					res.status(500).send(err.message)
+					res.status(500).send(err.message);
 				} else {
-					res.send(poll);
+					db.collection('users').update({_id: req.user._id}, {$push: {polls: poll._id}}, (err)=> {
+						if (err) {
+							res.status(500).send(err.message);
+						} else {
+							res.send(poll);
+						}
+					})
 				}
 			});
 		} else {
 			res.status(400).send("Error: wrong poll format.");
 		}
+	}
+});
+
+app.put('/vote', (req, res)=> {
+	if (err) {
+		res.status(500).send(err.message)
+	} else {
+		db.collection('polls').findOne()
 	}
 });
 
