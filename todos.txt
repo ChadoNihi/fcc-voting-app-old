@@ -1,10 +1,6 @@
-addPollToUser()
-store.dispatch(Actions.fetchUser()); with polls?
-polls -> pollsIds?
-
-
+all outcoming Objectids to strings
 
 --------------------
-poll: id, optHist, voters
+poll: id, optHist, userName
 user: ..., polls
 user in db: ..., pollIds

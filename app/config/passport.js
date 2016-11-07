@@ -37,7 +37,7 @@ module.exports = function (passport) {
 						"github.id": profile.id,
 						"github.displayName": profile.displayName,
 						"github.username": profile.username,
-						'pollIds': []
+						'pollsIds': []
 					}, (err, result)=> {
 						if (err) {
 							throw err;
@@ -71,7 +71,7 @@ module.exports = function (passport) {
 						"twitter.id": profile.id,
 						"twitter.displayName": profile.displayName,
 						"twitter.username": profile.username,
-						'pollIds': []
+						'pollsIds': []
 					}, (err, result)=> {
 						if (err) {
 							throw err;

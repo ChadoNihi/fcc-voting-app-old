@@ -3,16 +3,20 @@ import Axios from 'axios';
 /*
 * action creators
 */
-export const addPollSuccess = (poll)=>
+const addPollSuccess = (poll)=>
   ({type: 'ADD_POLL', poll});
-export const addUserSuccess = (user)=>
+const addPollToUser = (poll)=>
+  ({type: 'ADD_POLL_TO_USER', poll});
+const addUserSuccess = (user)=>
   ({type: 'ADD_USER', user});
-export const fetchPollsSuccess = (polls)=>
+const fetchPollsSuccess = (polls)=>
   ({type: 'SET_POLLS', polls});
-export const setErr = (err)=>
+const setErr = (err)=>
   ({type: 'SET_ERR', err});
-export const voteSuccess = (pollId, opt)=>
+const voteSuccess = (pollId, opt)=>
   ({type: 'VOTE', pollId, opt});
+const voteSuccessUserList = (pollId, opt)=>
+  ({type: 'VOTE_IN_USER_LIST', pollId, opt});
 
 export const fetchPolls = () => {
   // Returns a dispatcher function
@@ -56,7 +60,7 @@ export const postPoll = (poll) => {
         // Dispatch another action
         // to consume data
         dispatch(addPollSuccess(JSON.parse(response)));
-        addPollToUser();//todo
+        dispatch(addPollToUser(poll));
       })
       .catch(error => {
         dispatch(setErr(error))
@@ -73,6 +77,7 @@ export const postVote = (pollId, opt) => {
         // Dispatch another action
         // to consume data
         dispatch(voteSuccess(pollId, opt));
+        dispatch(voteSuccessUserList(pollId, opt))
       })
       .catch(error => {
         dispatch(setErr(error))

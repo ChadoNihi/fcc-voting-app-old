@@ -86,8 +86,10 @@ app.get('/user-api', (req, res) => {
 			if (err) {
 				res.status(500).send(err.message)
 			} else {
-				throw "todo: return with polls?";
-				res.json(user);
+				db.collection('polls').find({_id: {$in: user.pollsIds}}).toArray((err, polls)=> {
+					user.polls = polls;
+					res.json(user);
+				});
 			}
 		});
   } else {
@@ -113,7 +115,7 @@ app.post('/poll', loggedIn, (req, res) => {
 					res.status(500).send(err.message);
 				} else {
 					// does user session also get updated?
-					db.collection('users').update({_id: new ObjectId(req.user._id)}, {$push: {polls: poll._id}}, (err)=> {
+					db.collection('voting_app_users').update({_id: new ObjectId(req.user._id)}, {$push: {pollsIds: poll._id}}, (err)=> {
 						if (err) {
 							res.status(500).send(err.message);
 						} else {
@@ -137,10 +139,7 @@ app.put('/vote', (req, res)=> {
 			update: {$inc: {´optHist.${req.opt}´: 1}},
 			new: true
 		}, (err, poll)=> {
-			db.collection('voting_app_users').findAndModify(, (err, user)=> {
-				throw "todo";
 				res.send(poll);
-			});
 		});
 	}
 });
