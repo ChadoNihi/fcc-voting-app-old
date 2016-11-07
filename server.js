@@ -86,6 +86,7 @@ app.get('/user-api', (req, res) => {
 			if (err) {
 				res.status(500).send(err.message)
 			} else {
+				throw "todo: return with polls?";
 				res.json(user);
 			}
 		});
@@ -137,9 +138,9 @@ app.put('/vote', (req, res)=> {
 			new: true
 		}, (err, poll)=> {
 			db.collection('voting_app_users').findAndModify(, (err, user)=> {
-				
-			})
-			res.send(poll);
+				throw "todo";
+				res.send(poll);
+			});
 		});
 	}
 });
