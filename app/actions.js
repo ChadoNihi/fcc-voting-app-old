@@ -11,6 +11,8 @@ export const fetchPollsSuccess = (polls)=>
   ({type: 'SET_POLLS', polls});
 export const setErr = (err)=>
   ({type: 'SET_ERR', err});
+export const voteSuccess = (pollId, opt)=>
+  ({type: 'VOTE', pollId, opt});
 
 export const fetchPolls = () => {
   // Returns a dispatcher function
@@ -70,7 +72,7 @@ export const postVote = (pollId, opt) => {
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(voteSuccess(JSON.parse(response)));
+        dispatch(voteSuccess(pollId, opt));
       })
       .catch(error => {
         dispatch(setErr(error))

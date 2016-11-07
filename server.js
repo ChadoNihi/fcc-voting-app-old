@@ -53,7 +53,7 @@ app.route('/auth/twitter')
 	.use(ensureUnauthenticated())
 	.get(passport.authenticate('twitter'));
 app.route('/auth/twitter/callback')
-	.get(passport.authenticate('github', {
+	.get(passport.authenticate('twitter', {
 		successRedirect: '/',
 		failureRedirect: '/',
 		failureFlash: true
@@ -82,7 +82,7 @@ app.get('/polls-api', (req, res) => {
 
 app.get('/user-api', (req, res) => {
 	if (req.user) {
-		db.collection('voting_app_users').findOne(req.user._id, (err, user)=> {
+		db.collection('voting_app_users').findOne(new ObjectId(req.user._id), (err, user)=> {
 			if (err) {
 				res.status(500).send(err.message)
 			} else {
@@ -111,7 +111,8 @@ app.post('/poll', loggedIn, (req, res) => {
 				if (err) {
 					res.status(500).send(err.message);
 				} else {
-					db.collection('users').update({_id: req.user._id}, {$push: {polls: poll._id}}, (err)=> {
+					// does user session also get updated?
+					db.collection('users').update({_id: new ObjectId(req.user._id)}, {$push: {polls: poll._id}}, (err)=> {
 						if (err) {
 							res.status(500).send(err.message);
 						} else {
@@ -130,7 +131,16 @@ app.put('/vote', (req, res)=> {
 	if (err) {
 		res.status(500).send(err.message)
 	} else {
-		db.collection('polls').findOne()
+		db.collection('polls').findAndModify({
+			query: {_id: new ObjectId(req._id)},
+			update: {$inc: {´optHist.${req.opt}´: 1}},
+			new: true
+		}, (err, poll)=> {
+			db.collection('voting_app_users').findAndModify(, (err, user)=> {
+				
+			})
+			res.send(poll);
+		});
 	}
 });
 

@@ -7,3 +7,4 @@ polls -> pollsIds?
 --------------------
 poll: id, optHist, voters
 user: ..., polls
+user in db: ..., pollIds

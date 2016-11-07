@@ -7,11 +7,11 @@ var configAuth = require('./auth');
 
 module.exports = function (passport) {
 	passport.serializeUser(function (user, done) {
-		done(null, user._id);
+		done(null, user._id.toString());
 	});
 
 	passport.deserializeUser(function (id, done) {
-		db.collection('voting_app_users').findOne(id, function (err, user) {
+		db.collection('voting_app_users').findOne(new ObjectId(id), function (err, user) {
 			done(err, user);
 		});
 	});
