@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var mongo = require("mongodb").MongoClient,
+var mongo = require("mongodb").MongoClient;
 var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
@@ -104,8 +104,8 @@ app.post('/poll', loggedIn, (req, res) => {
 		let poll = req.body;
 		if (validatePoll(poll)) {
 			db.collection('polls').insert({
-				userName: {req.user.displayName},
-				title: poll.title
+				userName: req.user.displayName,
+				title: poll.title,
 				optHist: poll.opts.reduce((acc, opt)=> {
 						acc[opt] = 0;
 						return acc;

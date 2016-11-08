@@ -31,25 +31,25 @@ module.exports = [{
     })
   ]
 },
-// {
-//   entry: './server.js',
-//   output: {
-//     path: __dirname + '/app',
-//     filename: 'bundle.server.js',
-//     libraryTarget: 'commonjs2'
-//   },
-//   module: {
-//       loaders: [
-//           {
-//               exclude: /(node_modules)/,
-//               loader: 'babel',
-//               query: {
-//                   presets: ['es2015', 'react']
-//               }
-//           }
-//       ]
-//   },
-//   target: 'node',
-//   externals: /node_modules/
-// }
+{
+  entry: './server.js',
+  output: {
+    path: __dirname,
+    filename: 'bundle.server.js',
+    libraryTarget: 'commonjs2'
+  },
+  module: {
+      loaders: [
+          {
+              exclude: /(node_modules)/,
+              loader: 'babel',
+              query: {
+                  presets: ['es2015', 'react']
+              }
+          }
+      ]
+  },
+  target: 'node',
+  externals: /node_modules/
+}
 ]

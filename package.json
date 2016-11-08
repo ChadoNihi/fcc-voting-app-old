@@ -19,7 +19,8 @@
   ],
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "start": "node server.js"
+    "prestart": "build",
+    "start": "node bundle.server.js"
   },
   "author": "Blake Johnston",
   "license": "MIT",
