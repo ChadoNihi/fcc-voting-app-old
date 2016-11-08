@@ -72,7 +72,7 @@ export const postVote = (pollId, opt) => {
   // that dispatches an action at a later time
   return (dispatch) => {
     // Returns a promise
-    return Axios.post(put+'/poll', {_id: pollId, opt})
+    return Axios.post(put+'/poll', {id: pollId, opt})
       .then(response => {
         // Dispatch another action
         // to consume data

@@ -114,14 +114,20 @@ app.post('/poll', loggedIn, (req, res) => {
 				if (err) {
 					res.status(500).send(err.message);
 				} else {
-					// does user session also get updated?
-					db.collection('voting_app_users').update({_id: new ObjectId(req.user._id)}, {$push: {pollsIds: poll._id}}, (err)=> {
-						if (err) {
-							res.status(500).send(err.message);
-						} else {
-							res.send(poll);
-						}
-					})
+					db.collection('polls').findAndModify({
+						query: {_id: poll._id},
+						update: {id: poll._id.toString()},
+						new: true
+					}, (err, poll)=> {
+						// does user session also get updated?
+						db.collection('voting_app_users').update({_id: new ObjectId(req.user._id)}, {$push: {pollsIds: poll._id}}, (err)=> {
+							if (err) {
+								res.status(500).send(err.message);
+							} else {
+								res.send(poll);
+							}
+						});
+					});
 				}
 			});
 		} else {
@@ -135,7 +141,7 @@ app.put('/vote', (req, res)=> {
 		res.status(500).send(err.message)
 	} else {
 		db.collection('polls').findAndModify({
-			query: {_id: new ObjectId(req._id)},
+			query: {_id: new ObjectId(req.id)},
 			update: {$inc: {´optHist.${req.opt}´: 1}},
 			new: true
 		}, (err, poll)=> {
