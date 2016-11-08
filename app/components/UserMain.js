@@ -1,5 +1,5 @@
-import Polls from 'app/components/Polls';
-import {postPoll} from 'app/actions';
+import Polls from './Polls';
+import {postPoll} from '../actions';
 
 export default ({displayName, polls})=>
 

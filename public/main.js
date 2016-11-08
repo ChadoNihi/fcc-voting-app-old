@@ -1,19 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
-import {browserHistory, IndexRoute, Route, Router} from 'react-router');
+import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 
-import App from 'app/components/App';
-import About from 'app/components/About';
-import Poll from 'app/components/Poll';
-import Polls from 'app/components/Polls';
+import App from '../app/components/App';
+import About from '../app/components/About';
+import Poll from '../app/components/Poll';
+import Polls from '../app/components/Polls';
 
-import mainReducer from 'app/reducers/mainReducer';
-import { getPolls } from 'app/controllers/pollsController';
-import * as Actions from 'app/actions';
+import mainReducer from '../app/reducers/mainReducer';
+import { getPolls } from '../app/controllers/pollsController';
+import * as Actions from '../app/actions';
 var css = require('./css/main.styl');
 
 const store = createStore(

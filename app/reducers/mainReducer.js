@@ -15,14 +15,14 @@ export default rootReducer = (state = {}, action)=> {
       updatedPolls[updatedPolls.findIndex(pollO=> pollO.id = action.pollId)].optHist[action.opt]++;*/
       return update(state,
         {polls:
-          {state.polls.findIndex(pollO=> pollO.id = action.pollId):
+          {[state.polls.findIndex(pollO=> pollO.id = action.pollId)]:
             {optHist: {[action.opt]:
               {$apply: x=> x+1}}}}});
     case 'VOTE_IN_USER_LIST':
       return update(state,
         {user:
           {polls:
-            {state.polls.findIndex(pollO=> pollO.id = action.pollId):
+            {[state.polls.findIndex(pollO=> pollO.id = action.pollId)]:
               {optHist: {[action.opt]:
                 {$apply: x=> x+1}}}}}});
     default:

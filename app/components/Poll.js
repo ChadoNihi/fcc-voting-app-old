@@ -1,4 +1,4 @@
-import {postVote} from 'app/actions';
+import {postVote} from '../actions';
 
 export class Poll extends React.Component {
   constructor(props) {

@@ -1,7 +1,13 @@
+'use strict';
+
+var path = require('path');
+var webpack = require('webpack');
+var nodeExternals = require('webpack-node-externals');
+
 module.exports = [{
-  entry: "./public/main.js",
+  entry: path.join(__dirname, "./public/main.js"),
   output: {
-      path: __dirname + "/public",
+      path: path.join(__dirname, "/public"),
       filename: "bundle.js"
   },
   module: {
@@ -13,22 +19,29 @@ module.exports = [{
                   presets: ['es2015', 'react']
               }
           },
-          { test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' }
+          { exclude: /(node_modules)/, test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
+          {
+              exclude: /(node_modules)/,
+              test: /\.(eot|svg|ttf|woff|woff2)$/,
+              loader: "file-loader",
+              //include:
+          }
       ]
   },
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
+    //new webpack.IgnorePlugin(/vertx/),
+    /*new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
       mangle: true,
       sourcemap: false,
       beautify: false,
       dead_code: true
-    })
+    })*/
   ]
 },
 {
@@ -41,15 +54,17 @@ module.exports = [{
   module: {
       loaders: [
           {
-              exclude: /(node_modules)/,
+              test: /\.jsx?$/,
+              exclude: /node_modules/,
               loader: 'babel',
               query: {
                   presets: ['es2015', 'react']
               }
-          }
+          },
+          { test: /\.json$/, loader: "json-loader" }
       ]
   },
   target: 'node',
-  externals: /node_modules/
+  externals: [nodeExternals()]
 }
-]
+];

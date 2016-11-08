@@ -5,15 +5,15 @@ var mongo = require("mongodb").MongoClient;
 var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var validatePoll = require(process.cwd() + '/app/utils').validatePoll;
-var loggedIn = require(process.cwd() + '/app/utils').loggedIn;
-var ensureUnauthenticated = require(process.cwd() + '/app/utils').ensureUnauthenticated;
+var validatePoll = require(process.cwd() + '/app/utils.js').validatePoll;
+var loggedIn = require(process.cwd() + '/app/utils.js').loggedIn;
+var ensureUnauthenticated = require(process.cwd() + '/app/utils.js').ensureUnauthenticated;
 
 var app = express();
 var db;
 
 require('dotenv').load();
-require('./app/config/passport')(passport);
+require(process.cwd() + '/app/config/passport')(passport);
 
 mongo.connect(process.env.MONGO_URI, (err, mdb)=> {
 	if (err) {
@@ -142,7 +142,7 @@ app.put('/vote', (req, res)=> {
 	} else {
 		db.collection('polls').findAndModify({
 			query: {_id: new ObjectId(req.id)},
-			update: {$inc: {´optHist.${req.opt}´: 1}},
+			update: {$inc: {[`optHist.${req.opt}`]: 1}},
 			new: true
 		}, (err, poll)=> {
 				res.send(poll);
