@@ -1,4 +1,4 @@
-export default rootReducer = (state = {}, action)=> {
+export default (state = {}, action)=> {
   switch (action.type) {
     case 'ADD_POLL':
       return update(state, {polls: {$push: action.poll}});

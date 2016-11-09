@@ -12,7 +12,6 @@ import Poll from '../app/components/Poll';
 import Polls from '../app/components/Polls';
 
 import mainReducer from '../app/reducers/mainReducer';
-import { getPolls } from '../app/controllers/pollsController';
 import * as Actions from '../app/actions';
 var css = require('./css/main.styl');
 
@@ -25,16 +24,23 @@ store.dispatch(Actions.fetchPolls());
 store.dispatch(Actions.fetchUser());
 
 const history = syncHistoryWithStore(browserHistory, store);
+const routes = (
+  <Route path="/" component={App}>
+    <IndexRoute component={Polls} />
+    <Route path="poll/:id" component={Poll} />
+    <Route path="user/:id" component={UserMain} />
+    <Route path="/about" component={About} />
+  </Route>
+);
 
 document.addEventListener('DOMContentLoaded', function(){
   render((
     <Provider store={store}><Router history={history}>
-      <Route path="/" component={App}>
-        <IndexRoute component={Polls} />
-        <Route path="poll/:id" component={Poll} />
-        <Route path="user/:id" component={UserMain} />
-        <Route path="/about" component={About} />
-      </Route>
+      {routes}
     </Router></Provider>
   ), document.getElementById('root'));
 }, false);
+
+module.exports = {
+  routes: routes
+}

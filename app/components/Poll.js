@@ -1,3 +1,4 @@
+import React from 'react';
 import {postVote} from '../actions';
 
 export class Poll extends React.Component {

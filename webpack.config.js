@@ -19,12 +19,11 @@ module.exports = [{
                   presets: ['es2015', 'react']
               }
           },
-          { exclude: /(node_modules)/, test: /\.styl$/, loader: 'style-loader!css-loader!stylus-loader' },
+          { exclude: /(node_modules)/, test: /\.styl$/, loader: 'isomorphic-style-loader!css-loader!stylus-loader' },
           {
               exclude: /(node_modules)/,
               test: /\.(eot|svg|ttf|woff|woff2)$/,
-              loader: "file-loader",
-              //include:
+              loader: "file-loader"
           }
       ]
   },
@@ -53,6 +52,7 @@ module.exports = [{
   },
   module: {
       loaders: [
+          { test: /\.json$/, loader: "json-loader" },
           {
               test: /\.jsx?$/,
               exclude: /node_modules/,
@@ -61,7 +61,12 @@ module.exports = [{
                   presets: ['es2015', 'react']
               }
           },
-          { test: /\.json$/, loader: "json-loader" }
+          { exclude: /(node_modules)/, test: /\.styl$/, loader: 'isomorphic-style-loader!css-loader!stylus-loader' },
+          {
+              exclude: /(node_modules)/,
+              test: /\.(eot|svg|ttf|woff|woff2)$/,
+              loader: "file-loader"
+          }
       ]
   },
   target: 'node',

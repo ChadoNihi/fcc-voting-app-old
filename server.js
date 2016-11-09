@@ -6,11 +6,14 @@ var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
+var renderToString = require('react-dom/server').renderToString;
 var match = require('react-router').match;
+var RouterContext = require('react-router').RouterContext;
 var utils = require('./app/utils');
 var validatePoll = utils.validatePoll;
 var loggedIn = utils.loggedIn;
 var ensureUnauthenticated = utils.ensureUnauthenticated;
+var routes = require('./public/main');
 
 var app = express();
 var db = mongo.connect(process.env.MONGO_URI);
@@ -29,9 +32,7 @@ require('./app/config/passport')(passport);
 });*/
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/controllers', express.static('./app/controllers'));
 app.use('/public', express.static('./public'));
-app.use('/common', express.static('./app/common'));
 app.use(flash());
 
 app.use(session({
@@ -157,12 +158,12 @@ app.get('*', (req, res) => { //https://github.com/reactjs/react-router-redux/blo
     if (err) {
       res.status(500).send(err.message);
     } else if (redirect) {
-      res.redirect(redirect.pathname + redirect.search)
+      res.redirect(redirect.pathname + redirect.search);
     } else if (props) {
-      const appHtml = renderToString(<RouterContext {...props}/>)
-      res.send(renderPage(appHtml))
+      const appHtml = renderToString(<RouterContext {...props}/>);
+      res.send(renderPage(appHtml));
     } else {
-      res.status(404).send('Not Found')
+      res.status(404).send('Not Found');
     }
   })
 })
@@ -181,7 +182,6 @@ function renderPage(appHtml) {
 			<!--<link href="/public/css/main.css" rel="stylesheet">-->
 			<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 			<script defer src="https://use.fontawesome.com/ade899c041.js"></script>
-			<script defer type="text/javascript" src="common/common.js"></script>
 		</head>
 		<div id='root'>
 			${appHtml}
