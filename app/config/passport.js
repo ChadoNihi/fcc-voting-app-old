@@ -2,7 +2,7 @@
 
 var GitHubStrategy = require('passport-github').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
-var db = require(process.cwd() + '/server').db;
+var db = require('../../server.js').db;
 var configAuth = require('./auth');
 
 module.exports = function (passport) {

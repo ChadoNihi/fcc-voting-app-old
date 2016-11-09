@@ -5,29 +5,32 @@ var mongo = require("mongodb").MongoClient;
 var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var validatePoll = require(process.cwd() + '/app/utils.js').validatePoll;
-var loggedIn = require(process.cwd() + '/app/utils.js').loggedIn;
-var ensureUnauthenticated = require(process.cwd() + '/app/utils.js').ensureUnauthenticated;
+var flash = require('connect-flash');
+var utils = require('./app/utils');
+var validatePoll = utils.validatePoll;
+var loggedIn = utils.loggedIn;
+var ensureUnauthenticated = utils.ensureUnauthenticated;
 
 var app = express();
-var db;
+var db = mongo.connect(process.env.MONGO_URI);
+module.exports = db;
 
 require('dotenv').load();
-require(process.cwd() + '/app/config/passport')(passport);
+require('./app/config/passport')(passport);
 
-mongo.connect(process.env.MONGO_URI, (err, mdb)=> {
+/*mongo.connect(process.env.MONGO_URI, (err, mdb)=> {
 	if (err) {
 		throw err;
 	} else {
 		db = mdb;
 		exports.db = db;
 	}
-});
+});*/
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
-app.use('/public', express.static(process.cwd() + '/public'));
-app.use('/common', express.static(process.cwd() + '/app/common'));
+app.use('/controllers', express.static('./app/controllers'));
+app.use('/public', express.static('./public'));
+app.use('/common', express.static('./app/common'));
 app.use(flash());
 
 app.use(session({
@@ -40,8 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.route('/auth/github')
-	.use(ensureUnauthenticated())
-	.get(passport.authenticate('github'));
+	.get(ensureUnauthenticated, passport.authenticate('github'));
 app.route('/auth/github/callback')
 	.get(passport.authenticate('github', {
 		successRedirect: '/',
@@ -50,8 +52,7 @@ app.route('/auth/github/callback')
 	}));
 
 app.route('/auth/twitter')
-	.use(ensureUnauthenticated())
-	.get(passport.authenticate('twitter'));
+	.get(ensureUnauthenticated, passport.authenticate('twitter'));
 app.route('/auth/twitter/callback')
 	.get(passport.authenticate('twitter', {
 		successRedirect: '/',

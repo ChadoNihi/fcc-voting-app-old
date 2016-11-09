@@ -45,7 +45,7 @@ module.exports = [{
   ]
 },
 {
-  entry: './server.js',
+  entry: ['./server.js'],
   output: {
     path: __dirname,
     filename: 'bundle.server.js',
