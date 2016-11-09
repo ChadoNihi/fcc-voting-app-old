@@ -6,6 +6,7 @@ var passport = require('passport');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
+var match = require('react-router').match;
 var utils = require('./app/utils');
 var validatePoll = utils.validatePoll;
 var loggedIn = utils.loggedIn;
@@ -151,7 +152,7 @@ app.put('/vote', (req, res)=> {
 	}
 });
 
-app.get('*', (req, res) => {
+app.get('*', (req, res) => { //https://github.com/reactjs/react-router-redux/blob/master/examples/server/server.js
   match({ routes, location: req.url }, (err, redirect, props) => {
     if (err) {
       res.status(500).send(err.message);
