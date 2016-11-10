@@ -1,9 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {fetchPolls, fetchUser} from '../actions';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount () {
+    if (!this.props.polls) {
+      fetchPolls();
+      if (!this.props.user) {
+        fetchUser();
+      }
+    }
   }
 
   render() {
@@ -26,11 +36,11 @@ class App extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+/*const mapDispatchToProps = (dispatch) => {
   return {
     addPoll: () => dispatch(addPoll())
   }
-}
+}*/
 
 const mapStateToProps = (state) => {
   return {
@@ -40,8 +50,7 @@ const mapStateToProps = (state) => {
 }
 
 const TheApp = connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(App);
 
 export default TheApp;
