@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-import {browserHistory, IndexRoute, Route, Router} from 'react-router';
+import { IndexRoute, Route, Router, useRouterHistory } from 'react-router';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
@@ -23,7 +24,14 @@ combineReducers({
 store.dispatch(Actions.fetchPolls());
 store.dispatch(Actions.fetchUser());
 
-const history = syncHistoryWithStore(browserHistory, store);
+//const history = syncHistoryWithStore(browserHistory, store);
+const createAppHistory = useRouterHistory(createBrowserHistory);
+
+const appHistory = createAppHistory({
+  parseQueryString: parse,
+  stringifyQuery: stringify
+});
+
 const routes = (
   <Route path="/" component={App}>
     <IndexRoute component={Polls} />
@@ -35,7 +43,7 @@ const routes = (
 
 document.addEventListener('DOMContentLoaded', function(){
   render((
-    <Provider store={store}><Router history={history}>
+    <Provider store={store}><Router history={appHistory}>
       {routes}
     </Router></Provider>
   ), document.getElementById('root'));

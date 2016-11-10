@@ -1,35 +1,37 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/bin/nodejs', '/usr/local/bin/npm', 'start' ]
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'start' ]
 2 info using npm@3.10.8
 3 info using node@v6.9.1
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle clementinejs-fcc@1.0.1~prestart: clementinejs-fcc@1.0.1
 6 verbose lifecycle clementinejs-fcc@1.0.1~prestart: unsafe-perm in lifecycle true
-7 verbose lifecycle clementinejs-fcc@1.0.1~prestart: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/electrofish/StudyStuff/fcc/fcc-voting-app/node_modules/.bin:/home/electrofish/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-8 verbose lifecycle clementinejs-fcc@1.0.1~prestart: CWD: /home/electrofish/StudyStuff/fcc/fcc-voting-app
-9 silly lifecycle clementinejs-fcc@1.0.1~prestart: Args: [ '-c', 'npm run build' ]
+7 verbose lifecycle clementinejs-fcc@1.0.1~prestart: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\alexandr.shchelov\Documents\fcc\voting-app\node_modules\.bin;C:\Users\alexandr.shchelov\AppData\Local\GitHub\PortableGit_284a859b0e6deba86edc624fef1e4db2aa8241a9\cmd;C:\Users\alexandr.shchelov\AppData\Local\GitHub\PortableGit_284a859b0e6deba86edc624fef1e4db2aa8241a9\usr\bin;C:\Users\alexandr.shchelov\AppData\Local\GitHub\PortableGit_284a859b0e6deba86edc624fef1e4db2aa8241a9\usr\share\git-tfs;C:\Users\alexandr.shchelov\AppData\Local\Apps\2.0\Y66BLKRK.CBA\G54OR8LY.R3M\gith..tion_317444273a93ac29_0003.0003_83ed0490a76a8c54;C:\Users\alexandr.shchelov\AppData\Local\GitHub\lfs-amd64_1.3.1;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Users\alexandr.shchelov\AppData\Roaming\npm;C:\Windows\Microsoft.NET\Framework\v4.0.30319\
+8 verbose lifecycle clementinejs-fcc@1.0.1~prestart: CWD: C:\Users\alexandr.shchelov\Documents\fcc\voting-app
+9 silly lifecycle clementinejs-fcc@1.0.1~prestart: Args: [ '/d /s /c', 'npm run build' ]
 10 silly lifecycle clementinejs-fcc@1.0.1~prestart: Returned: code: 0  signal: null
 11 info lifecycle clementinejs-fcc@1.0.1~start: clementinejs-fcc@1.0.1
 12 verbose lifecycle clementinejs-fcc@1.0.1~start: unsafe-perm in lifecycle true
-13 verbose lifecycle clementinejs-fcc@1.0.1~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/electrofish/StudyStuff/fcc/fcc-voting-app/node_modules/.bin:/home/electrofish/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-14 verbose lifecycle clementinejs-fcc@1.0.1~start: CWD: /home/electrofish/StudyStuff/fcc/fcc-voting-app
-15 silly lifecycle clementinejs-fcc@1.0.1~start: Args: [ '-c', 'node bundle.server.js' ]
+13 verbose lifecycle clementinejs-fcc@1.0.1~start: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\alexandr.shchelov\Documents\fcc\voting-app\node_modules\.bin;C:\Users\alexandr.shchelov\AppData\Local\GitHub\PortableGit_284a859b0e6deba86edc624fef1e4db2aa8241a9\cmd;C:\Users\alexandr.shchelov\AppData\Local\GitHub\PortableGit_284a859b0e6deba86edc624fef1e4db2aa8241a9\usr\bin;C:\Users\alexandr.shchelov\AppData\Local\GitHub\PortableGit_284a859b0e6deba86edc624fef1e4db2aa8241a9\usr\share\git-tfs;C:\Users\alexandr.shchelov\AppData\Local\Apps\2.0\Y66BLKRK.CBA\G54OR8LY.R3M\gith..tion_317444273a93ac29_0003.0003_83ed0490a76a8c54;C:\Users\alexandr.shchelov\AppData\Local\GitHub\lfs-amd64_1.3.1;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\nodejs\;C:\Users\alexandr.shchelov\AppData\Roaming\npm;C:\Windows\Microsoft.NET\Framework\v4.0.30319\
+14 verbose lifecycle clementinejs-fcc@1.0.1~start: CWD: C:\Users\alexandr.shchelov\Documents\fcc\voting-app
+15 silly lifecycle clementinejs-fcc@1.0.1~start: Args: [ '/d /s /c', 'node bundle.server.js' ]
 16 silly lifecycle clementinejs-fcc@1.0.1~start: Returned: code: 1  signal: null
 17 info lifecycle clementinejs-fcc@1.0.1~start: Failed to exec start script
 18 verbose stack Error: clementinejs-fcc@1.0.1 start: `node bundle.server.js`
 18 verbose stack Exit status 1
-18 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+18 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
 18 verbose stack     at emitTwo (events.js:106:13)
 18 verbose stack     at EventEmitter.emit (events.js:191:7)
-18 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+18 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
 18 verbose stack     at emitTwo (events.js:106:13)
 18 verbose stack     at ChildProcess.emit (events.js:191:7)
 18 verbose stack     at maybeClose (internal/child_process.js:877:16)
 18 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 19 verbose pkgid clementinejs-fcc@1.0.1
-20 verbose cwd /home/electrofish/StudyStuff/fcc/fcc-voting-app
-21 error Linux 4.4.0-45-generic
-22 error argv "/usr/bin/nodejs" "/usr/local/bin/npm" "start"
+20 verbose cwd C:\Users\alexandr.shchelov\Documents\fcc\voting-app
+21 error Windows_NT 10.0.10240
+22 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "start"
 23 error node v6.9.1
 24 error npm  v3.10.8
 25 error code ELIFECYCLE
