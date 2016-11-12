@@ -1,5 +1,10 @@
 'use strict';
 
+import { createMemoryHistory, match, RouterContext } from 'react-router';
+
+import { configureStore } from '.app/store';
+import routes from '.app/routes';
+
 var express = require('express');
 var mongo = require("mongodb").MongoClient;
 var passport = require('passport');
@@ -7,13 +12,10 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var renderToString = require('react-dom/server').renderToString;
-var match = require('react-router').match;
-var RouterContext = require('react-router').RouterContext;
 var utils = require('./app/utils');
 var validatePoll = utils.validatePoll;
 var loggedIn = utils.loggedIn;
 var ensureUnauthenticated = utils.ensureUnauthenticated;
-var routes = require('./public/main');
 
 var app = express();
 var db = mongo.connect(process.env.MONGO_URI);
@@ -22,16 +24,28 @@ module.exports = db;
 require('dotenv').load();
 require('./app/config/passport')(passport);
 
-/*mongo.connect(process.env.MONGO_URI, (err, mdb)=> {
-	if (err) {
-		throw err;
-	} else {
-		db = mdb;
-		exports.db = db;
-	}
-});*/
+const HTML = ({ content, store }) => (
+  <html>
+		<head lang='en'>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="description" content="Voting App for Free Code Camp">
+			<title>Voting App</title>
+			<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+			<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue_grey-orange.min.css" />
+			<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+			<script defer src="https://use.fontawesome.com/ade899c041.js"></script>
+		</head>
+    <body>
+      <div id="root" dangerouslySetInnerHTML={{ __html: content }}/>
+      <script dangerouslySetInnerHTML={{ __html: `window.__initialState__=${serialize(store.getState())};` }}/>
+      <script src="/public/bundle.js"/>
+    </body>
+  </html>
+)
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/public', express.static('./public'));
 app.use(flash());
 
@@ -154,44 +168,30 @@ app.put('/vote', (req, res)=> {
 });
 
 app.get('*', (req, res) => { //https://github.com/reactjs/react-router-redux/blob/master/examples/server/server.js
+	const memoryHistory = createMemoryHistory(req.url);
+  const store = configureStore(memoryHistory);
+  const history = syncHistoryWithStore(memoryHistory, store);
+
   match({ routes, location: req.url }, (err, redirect, props) => {
     if (err) {
       res.status(500).send(err.message);
     } else if (redirect) {
       res.redirect(redirect.pathname + redirect.search);
     } else if (props) {
-      const appHtml = renderToString(<RouterContext {...props}/>);
-      res.send(renderPage(appHtml));
+			const content = renderToString(
+        <Provider store={store}>
+          <RouterContext {...props}/>
+        </Provider>
+      )
+      res.send('<!doctype html>\n' + renderToString(<HTML content={content} store={store}/>))
+
     } else {
       res.status(404).send('Not Found');
     }
   })
 })
 
-function renderPage(appHtml) {
-  return `
-		<!doctype html>
-		<html lang="en">
-		<head>
-			<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<meta name="description" content="Voting App for Free Code Camp">
-			<title>Voting App</title>
-			<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-			<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue_grey-orange.min.css" />
-			<!--<link href="/public/css/main.css" rel="stylesheet">-->
-			<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-			<script defer src="https://use.fontawesome.com/ade899c041.js"></script>
-		</head>
-		<div id='root'>
-			${appHtml}
-			<script src="/public/bundle.js"></script>
-		</div>
-		</html>
-   `
-}
-
 var port = process.env.PORT || 8080;
 app.listen(port,  function () {
-	console.log('Node.js listening on port ' + port + '...');
+	console.log('Node.js listening on port ' + port + '... Ctrl+C to stop');
 });
