@@ -44,7 +44,7 @@ module.exports = [{
   ]
 },
 {
-  entry: [path.join(__dirname, "/server.js")],
+  entry: path.join(__dirname, "/server.js"),
   output: {
     path: __dirname,
     filename: 'bundle.server.js',

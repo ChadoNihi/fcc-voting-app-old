@@ -2,8 +2,9 @@
 
 var GitHubStrategy = require('passport-github').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
-var db = require('../../server.js').db;
+var db = require('../db.js').db;
 var configAuth = require('./auth');
+var ObjectId = require('mongodb').ObjectID;
 
 module.exports = function (passport) {
 	passport.serializeUser(function (user, done) {
@@ -23,7 +24,7 @@ module.exports = function (passport) {
 	},
 	function (token, refreshToken, profile, done) {
 		process.nextTick(function () {
-			db.collection('voting_app_users').findOne({ 'github.id': profile.id }, function (err, user) {
+			db.collection('voting_app_users').findOne({ 'githubId': profile.id }, function (err, user) {
 				if (err) {
 					return done(err);
 				}
@@ -34,9 +35,9 @@ module.exports = function (passport) {
 
 					db.collection('voting_app_users').insert({
 						"provider": profile.provider,
-						"github.id": profile.id,
-						"github.displayName": profile.displayName,
-						"github.username": profile.username,
+						"githubId": profile.id,
+						"githubDisplayName": profile.displayName,
+						"githubUsername": profile.username,
 						'pollsIds': []
 					}, (err, result)=> {
 						if (err) {
@@ -57,7 +58,7 @@ module.exports = function (passport) {
   },
 	function (token, refreshToken, profile, done) {
 		process.nextTick(function () {
-			db.collection('voting_app_users').findOne({ 'twitter.id': profile.id }, function (err, user) {
+			db.collection('voting_app_users').findOne({ 'twitterId': profile.id }, function (err, user) {
 				if (err) {
 					return done(err);
 				}
@@ -68,9 +69,9 @@ module.exports = function (passport) {
 
 					db.collection('voting_app_users').insert({
 						"provider": profile.provider,
-						"twitter.id": profile.id,
-						"twitter.displayName": profile.displayName,
-						"twitter.username": profile.username,
+						"twitterId": profile.id,
+						"twitterDisplayName": profile.displayName,
+						"twitterUsername": profile.username,
 						'pollsIds': []
 					}, (err, result)=> {
 						if (err) {

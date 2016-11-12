@@ -15,9 +15,9 @@ export default ({isLoggedIn, title, subtitle})=>
           ) :
             (
           <nav className="mdl-navigation">
-            <span>Log In with =>></span>
-            <Link to="/" className="mdl-navigation__link"><i className="fa fa-twitter fa-2x" aria-hidden="true"></i></Link>
-            <Link to="/" className="mdl-navigation__link"><i className="fa fa-github fa-2x" aria-hidden="true"></i></Link>
+            <span>Log in with:</span>
+            <a href="/auth/twitter" className="mdl-navigation__link"><i className="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
+            <a href="/auth/github" className="mdl-navigation__link"><i className="fa fa-github fa-2x" aria-hidden="true"></i></a>
           </nav>
         )}
       </div>

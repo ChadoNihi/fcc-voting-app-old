@@ -4,3 +4,6 @@ all outcoming Objectids to strings
 poll: id, optHist, userName
 user: ..., polls
 user in db: ..., pollIds
+
+-----------
+https://fcc-voting-app-efish.herokuapp.com/auth/twitter/callback
