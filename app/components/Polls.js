@@ -1,8 +1,9 @@
+import React from 'react';
 import { Link } from 'react-router';
 
 export default ({polls})=>
   <ul className='mdl-list'>
-    {polls.map((poll, i)=>{
+    {polls ? (polls.map((poll, i)=>{
       return (
         <li className='mdl-list__item'>
           <span className='mdl-list__item-primary-content'>
@@ -10,5 +11,5 @@ export default ({polls})=>
           </span>
         </li>
       );
-    })}
+    })) : "loading polls..."}
   </ul>;

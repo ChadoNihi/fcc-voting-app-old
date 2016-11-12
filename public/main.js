@@ -1,9 +1,10 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { IndexRoute, Route, Router } from 'react-router';
+import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 
+import routes from '../app/routes';
 import { configureStore } from '../app/store';
 import * as Actions from '../app/actions';
 import css from './css/main.styl';

@@ -2,9 +2,7 @@ import React from 'react';
 import Polls from './Polls';
 import {postPoll} from '../actions';
 
-export default ({displayName, polls})=>
-
-export class UserMain extends React.Component {
+export default class UserMain extends React.Component {
   constructor(props) {
     super(props);
     this.state = {isEditing: false};

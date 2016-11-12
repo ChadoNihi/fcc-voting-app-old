@@ -1,28 +1,31 @@
+import React from 'react';
 import { Link } from 'react-router';
 
 export default ({isLoggedIn, title, subtitle})=>
   <div>
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <span class="mdl-layout-title"><Link to="/">{title}</Link></span>
+    <header className="mdl-layout__header">
+      <div className="mdl-layout__header-row">
+        <span className="mdl-layout-title"><Link to="/">{title}</Link></span>
         <span>{subtitle}</span>
-        <div class="mdl-layout-spacer"></div>
-        <nav class="mdl-navigation">
+        <div className="mdl-layout-spacer"></div>
           {isLoggedIn ? (
-            <Link to="/" className="mdl-navigation__link">Logout</Link>
+            <nav className="mdl-navigation">
+              <Link to="/" className="mdl-navigation__link">Logout</Link>
+            </nav>
           ) :
             (
-          <span>Log In with =>></span>
-          <Link to="/" className="mdl-navigation__link"><i className="fa fa-twitter fa-lg" aria-hidden="true"></i></Link>
-          <Link to="/" className="mdl-navigation__link"><i className="fa fa-github fa-lg" aria-hidden="true"></i></Link>
+          <nav className="mdl-navigation">
+            <span>Log In with =>></span>
+            <Link to="/" className="mdl-navigation__link"><i className="fa fa-twitter fa-2x" aria-hidden="true"></i></Link>
+            <Link to="/" className="mdl-navigation__link"><i className="fa fa-github fa-2x" aria-hidden="true"></i></Link>
+          </nav>
         )}
-        </nav>
       </div>
     </header>
-    {/*<div class="mdl-layout__drawer mdl-layout--small-screen-only">
-      <span class="mdl-layout-title">Title</span>
-      <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">Link</a>
+    {/*<div className="mdl-layout__drawer mdl-layout--small-screen-only">
+      <span className="mdl-layout-title">Title</span>
+      <nav className="mdl-navigation">
+        <a className="mdl-navigation__link" href="">Link</a>
       </nav>
     </div>*/}
   </div>;

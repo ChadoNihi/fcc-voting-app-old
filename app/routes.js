@@ -1,7 +1,11 @@
+import React from 'react';
+import { Route, IndexRoute } from 'react-router'
+
 import App from './components/App';
 import About from './components/About';
 import Poll from './components/Poll';
 import Polls from './components/Polls';
+import UserMain from './components/UserMain';
 
 const routes = (
   <Route path="/" component={App}>

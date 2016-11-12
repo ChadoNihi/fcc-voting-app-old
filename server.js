@@ -1,9 +1,13 @@
 'use strict';
 
+import serialize from 'serialize-javascript';
+import React from 'react';
+import { Provider } from 'react-redux';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
-import { configureStore } from '.app/store';
-import routes from '.app/routes';
+import { configureStore } from './app/store';
+import routes from './app/routes';
 
 var express = require('express');
 var mongo = require("mongodb").MongoClient;
@@ -27,11 +31,11 @@ require('./app/config/passport')(passport);
 const HTML = ({ content, store }) => (
   <html>
 		<head lang='en'>
-			<meta charset="utf-8">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<meta name="description" content="Voting App for Free Code Camp">
+			<meta charset="utf-8" />
+			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+			<meta name="description" content="Voting App for Free Code Camp" />
 			<title>Voting App</title>
-			<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+			<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 			<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue_grey-orange.min.css" />
 			<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 			<script defer src="https://use.fontawesome.com/ade899c041.js"></script>

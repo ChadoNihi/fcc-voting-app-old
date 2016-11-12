@@ -5,7 +5,7 @@ var webpack = require('webpack');
 var nodeExternals = require('webpack-node-externals');
 
 module.exports = [{
-  entry: path.join(__dirname, "./public/main.js"),
+  entry: path.join(__dirname, "/public/main.js"),
   output: {
       path: path.join(__dirname, "/public"),
       filename: "bundle.js"
@@ -44,7 +44,7 @@ module.exports = [{
   ]
 },
 {
-  entry: ['./server.js'],
+  entry: [path.join(__dirname, "/server.js")],
   output: {
     path: __dirname,
     filename: 'bundle.server.js',
