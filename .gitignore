@@ -4,4 +4,4 @@ node_modules/
 bundle.js
 bundle.server.js
 *.ttf
-*.css
+public/css/

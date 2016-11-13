@@ -13,10 +13,8 @@ class App extends React.Component {
   componentDidMount () {
     if (!this.props.polls) {
       fetchPolls();
-      if (!this.props.user) {
-        fetchUser();
-      }
     }
+    fetchUser();
   }
 
   render() {
@@ -26,7 +24,9 @@ class App extends React.Component {
     } catch (e) {
       ch = undefined;
     }
-
+    //if (!this.props.user) {
+      fetchUser(); // TODO: find another way
+    //}
     return (
       <div className="mdl-layout mdl-js-layout mdl-layout--no-drawer-button">
         <Header isLoggedIn={!!this.props.user} title="The Voting App" subtitle={(ch && ch.type == "UserMain" ? "Your polls" : undefined)} />

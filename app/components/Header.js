@@ -10,7 +10,7 @@ export default ({isLoggedIn, title, subtitle})=>
         <div className="mdl-layout-spacer"></div>
           {isLoggedIn ? (
             <nav className="mdl-navigation">
-              <Link to="/" className="mdl-navigation__link">Logout</Link>
+              <Link to="/logout" className="mdl-navigation__link">Logout</Link>
             </nav>
           ) :
             (

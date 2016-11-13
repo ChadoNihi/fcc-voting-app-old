@@ -28,7 +28,7 @@ export const fetchPolls = () => {
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(fetchPollsSuccess(JSON.parse(response)));
+        dispatch(fetchPollsSuccess(JSON.parse(response.data)));
       })
       .catch(error => {
         dispatch(setErr(error))
@@ -39,14 +39,17 @@ export const fetchUser = () => {
   // Returns a dispatcher function
   // that dispatches an action at a later time
   return (dispatch) => {
+    console.log('before returning promise');
     // Returns a promise
     return Axios.get(appUrl+'/user-api')
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(addUserSuccess(JSON.parse(response)));
+        console.log('fetched user: '+response);
+        dispatch(addUserSuccess(JSON.parse(response.data)));
       })
       .catch(error => {
+        console.log(error);
         dispatch(setErr(error))
       });
   };
@@ -60,7 +63,7 @@ export const postPoll = (poll) => {
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(addPollSuccess(JSON.parse(response)));
+        dispatch(addPollSuccess(JSON.parse(response.data)));
         dispatch(addPollToUser(poll));
       })
       .catch(error => {

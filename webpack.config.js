@@ -23,13 +23,13 @@ module.exports = [{
           {
             exclude: /(node_modules)/,
             test: /\.styl$/,
-            loader: ExtractTextPlugin.extract("isomorphic-style-loader", "css-loader!stylus-loader"),
-          },
+            loader: ExtractTextPlugin.extract(['css-loader', 'stylus-loader']),
+          },/*
           {
               exclude: /(node_modules)/,
               test: /\.(eot|svg|ttf|woff|woff2)$/,
               loader: "file-loader"
-          }
+          }*/
       ]
   },
   plugins: [
@@ -37,8 +37,7 @@ module.exports = [{
     new ExtractTextPlugin("css/main.css"),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
-    new webpack.optimize.DedupePlugin(),
+    })
     //new webpack.IgnorePlugin(/vertx/),
     /*new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
@@ -67,12 +66,12 @@ module.exports = [{
                   presets: ['es2015', 'react']
               }
           },
-          //{ exclude: /(node_modules)/, test: /\.styl$/, loader: 'isomorphic-style-loader!css-loader!stylus-loader' },
+          /*{ exclude: /(node_modules)/, test: /\.styl$/, loader: 'isomorphic-style-loader!css-loader!stylus-loader' },
           {
               exclude: /(node_modules)/,
               test: /\.(eot|svg|ttf|woff|woff2)$/,
               loader: "file-loader"
-          }
+          }*/
       ]
   },
   target: 'node',

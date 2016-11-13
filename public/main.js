@@ -7,7 +7,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import routes from '../app/routes';
 import { configureStore } from '../app/store';
 import * as Actions from '../app/actions';
-require('./css/main.styl');
+require('./main.styl');
 
 /*const store = createStore(
 combineReducers({

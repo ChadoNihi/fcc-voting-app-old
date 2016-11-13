@@ -8,7 +8,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import { configureStore } from './app/store';
 import routes from './app/routes';
-//require('./public/css/main.styl');
 
 var express = require('express');
 var passport = require('passport');
@@ -40,9 +39,10 @@ mongo.connect(function(err){
   			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
   			<meta name="description" content="Voting App for Free Code Camp" />
   			<title>Voting App</title>
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" />
   			<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   			<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue_grey-orange.min.css" />
-        <link rel="stylesheet" href="/public/css/main.css" />
+        <link rel="stylesheet" href="public/css/main.css" />
   			<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
   			<script defer src="https://use.fontawesome.com/ade899c041.js"></script>
   		</head>
