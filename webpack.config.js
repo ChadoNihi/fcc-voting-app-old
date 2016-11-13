@@ -3,6 +3,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var nodeExternals = require('webpack-node-externals');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = [{
   entry: path.join(__dirname, "/public/main.js"),
@@ -19,7 +20,11 @@ module.exports = [{
                   presets: ['es2015', 'react']
               }
           },
-          { exclude: /(node_modules)/, test: /\.styl$/, loader: 'isomorphic-style-loader!css-loader!stylus-loader' },
+          {
+            exclude: /(node_modules)/,
+            test: /\.styl$/,
+            loader: ExtractTextPlugin.extract("isomorphic-style-loader", "css-loader!stylus-loader"),
+          },
           {
               exclude: /(node_modules)/,
               test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -29,6 +34,7 @@ module.exports = [{
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
+    new ExtractTextPlugin("css/main.css"),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     }),
@@ -61,7 +67,7 @@ module.exports = [{
                   presets: ['es2015', 'react']
               }
           },
-          { exclude: /(node_modules)/, test: /\.styl$/, loader: 'isomorphic-style-loader!css-loader!stylus-loader' },
+          //{ exclude: /(node_modules)/, test: /\.styl$/, loader: 'isomorphic-style-loader!css-loader!stylus-loader' },
           {
               exclude: /(node_modules)/,
               test: /\.(eot|svg|ttf|woff|woff2)$/,

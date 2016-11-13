@@ -28,7 +28,7 @@ class App extends React.Component {
     }
 
     return (
-      <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <div className="mdl-layout mdl-js-layout mdl-layout--no-drawer-button">
         <Header isLoggedIn={!!this.props.user} title="The Voting App" subtitle={(ch && ch.type == "UserMain" ? "Your polls" : undefined)} />
         <main className="mdl-layout__content">
           {this.props.children}
