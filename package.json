@@ -29,6 +29,7 @@
     "body-parser": "^1.15.2",
     "connect-flash": "^0.1.1",
     "dotenv": "^1.2.0",
+    "es6-promise": "^4.0.5",
     "express": "^4.12.4",
     "express-session": "^1.11.3",
     "immutability-helper": "^2.0.0",

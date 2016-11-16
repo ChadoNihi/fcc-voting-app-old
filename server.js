@@ -19,6 +19,7 @@ var utils = require('./app/utils');
 var validatePoll = utils.validatePoll;
 var loggedIn = utils.loggedIn;
 var ensureUnauthenticated = utils.ensureUnauthenticated;
+var ObjectId = require('mongodb').ObjectID;
 
 var app = express();
 
@@ -108,6 +109,7 @@ mongo.connect(function(err){
   });
 
   app.get('/user-api', (req, res) => {
+    console.log('get /user-api\nreq.user'+req.user);
   	if (req.user) {
   		db.collection('voting_app_users').findOne(new ObjectId(req.user._id), (err, user)=> {
   			if (err) {
@@ -182,23 +184,28 @@ mongo.connect(function(err){
     const store = configureStore(memoryHistory);
     const history = syncHistoryWithStore(memoryHistory, store);
 
-    match({ routes, location: req.url }, (err, redirect, props) => {
-      if (err) {
-        res.status(500).send(err.message);
-      } else if (redirect) {
-        res.redirect(redirect.pathname + redirect.search);
-      } else if (props) {
-  			const content = renderToString(
-          <Provider store={store}>
-            <RouterContext {...props}/>
-          </Provider>
-        )
-        res.send('<!doctype html>\n' + renderToString(<HTML content={content} store={store}/>))
+    Promise.all([
+      store.dispatch(fetchUser());
+      store.dispatch(fetchPolls());
+    ]).then(()=> {
+      match({ routes, location: req.url }, (err, redirect, props) => {
+        if (err) {
+          res.status(500).send(err.message);
+        } else if (redirect) {
+          res.redirect(redirect.pathname + redirect.search);
+        } else if (props) {
+    			const content = renderToString(
+            <Provider store={store}>
+              <RouterContext {...props}/>
+            </Provider>
+          )
+          res.send('<!doctype html>\n' + renderToString(<HTML content={content} store={store}/>))
 
-      } else {
-        res.status(404).send('Not Found');
-      }
-    })
+        } else {
+          res.status(404).send('Not Found');
+        }
+      });
+    });
   })
 
   var port = process.env.PORT || 8080;

@@ -14,8 +14,8 @@ export function configureStore(history, initialState) {
     reducer,
     initialState,
     applyMiddleware(
-      routerMiddleware(history),
-      thunk
+      thunk,
+      routerMiddleware(history)
     )
   );
 

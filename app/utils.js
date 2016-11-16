@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+  appUrl: 'http://127.0.0.1:8080/', //dirty solution after hours of frustration w/ webpack
   loggedIn(req, res, next) {
     if (req.user) {
       next();
@@ -22,5 +23,10 @@ module.exports = {
       return res.redirect('/');
     }
     next();
+  },
+  getAppUrl() {
+    return ((process && process.env.APP_URL) ? process.env.APP_URL : (window.location.origin || window.location.protocol + "//"
+        + window.location.hostname
+        + (window.location.port ? ':' + window.location.port : '')));
   }
 };

@@ -1,6 +1,8 @@
-import Axios from 'axios';
-import appUrl from './common/common';
+import axios from 'axios';
 
+import {appUrl} from './utils.js';
+
+var Promise = require('es6-promise').Promise;
 /*
 * action creators
 */
@@ -24,11 +26,11 @@ export const fetchPolls = () => {
   // that dispatches an action at a later time
   return (dispatch) => {
     // Returns a promise
-    return Axios.get(appUrl+'/polls-api')
+    return axios.get(appUrl+'polls-api')
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(fetchPollsSuccess(JSON.parse(response.data)));
+        dispatch(fetchPollsSuccess(response.data));
       })
       .catch(error => {
         dispatch(setErr(error))
@@ -39,17 +41,15 @@ export const fetchUser = () => {
   // Returns a dispatcher function
   // that dispatches an action at a later time
   return (dispatch) => {
-    console.log('before returning promise');
     // Returns a promise
-    return Axios.get(appUrl+'/user-api')
-      .then(response => {
+    return axios.get(appUrl+'user-api').then(response => {
         // Dispatch another action
         // to consume data
-        console.log('fetched user: '+response);
-        dispatch(addUserSuccess(JSON.parse(response.data)));
+        console.log('fetched user: '+response.data);
+        dispatch(addUserSuccess(response.data));
       })
       .catch(error => {
-        console.log(error);
+        console.log("error in fetchUser: "+error);
         dispatch(setErr(error))
       });
   };
@@ -59,11 +59,11 @@ export const postPoll = (poll) => {
   // that dispatches an action at a later time
   return (dispatch) => {
     // Returns a promise
-    return Axios.post(appUrl+'/poll', poll)
+    return axios.post(appUrl+'poll', poll)
       .then(response => {
         // Dispatch another action
         // to consume data
-        dispatch(addPollSuccess(JSON.parse(response.data)));
+        dispatch(addPollSuccess(response.data));
         dispatch(addPollToUser(poll));
       })
       .catch(error => {
@@ -76,7 +76,7 @@ export const postVote = (pollId, opt) => {
   // that dispatches an action at a later time
   return (dispatch) => {
     // Returns a promise
-    return Axios.post(put+'/poll', {id: pollId, opt})
+    return axios.post(appUrl+'poll', {id: pollId, opt})
       .then(response => {
         // Dispatch another action
         // to consume data

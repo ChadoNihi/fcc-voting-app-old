@@ -6,7 +6,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import routes from '../app/routes';
 import { configureStore } from '../app/store';
-import * as Actions from '../app/actions';
 require('./main.styl');
 
 /*const store = createStore(
