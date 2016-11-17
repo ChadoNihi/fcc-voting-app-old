@@ -8,6 +8,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import { configureStore } from './app/store';
 import routes from './app/routes';
+import {fetchPolls, fetchUser} from './app/actions';
 
 var express = require('express');
 var passport = require('passport');
@@ -122,7 +123,7 @@ mongo.connect(function(err){
   			}
   		});
     } else {
-      res.json({});
+      res.json(false);
     }
   });
 
@@ -185,8 +186,8 @@ mongo.connect(function(err){
     const history = syncHistoryWithStore(memoryHistory, store);
 
     Promise.all([
-      store.dispatch(fetchUser());
-      store.dispatch(fetchPolls());
+      store.dispatch(fetchUser()),
+      store.dispatch(fetchPolls())
     ]).then(()=> {
       match({ routes, location: req.url }, (err, redirect, props) => {
         if (err) {

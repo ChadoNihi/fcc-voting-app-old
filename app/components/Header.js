@@ -8,7 +8,7 @@ export default ({isLoggedIn, title, subtitle})=>
         <span className="mdl-layout-title"><Link to="/">{title}</Link></span>
         <span>{subtitle}</span>
         <div className="mdl-layout-spacer"></div>
-          {isLoggedIn ? (
+          {(isLoggedIn ? (
             <nav className="mdl-navigation">
               <Link to="/logout" className="mdl-navigation__link">Logout</Link>
             </nav>
@@ -19,7 +19,7 @@ export default ({isLoggedIn, title, subtitle})=>
             <a href="/auth/twitter" className="mdl-navigation__link"><i className="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
             <a href="/auth/github" className="mdl-navigation__link"><i className="fa fa-github fa-2x" aria-hidden="true"></i></a>
           </nav>
-        )}
+        ))}
       </div>
     </header>
     {/*<div className="mdl-layout__drawer mdl-layout--small-screen-only">

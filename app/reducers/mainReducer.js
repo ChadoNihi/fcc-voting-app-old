@@ -1,5 +1,5 @@
 export default (state = {}, action)=> {
-  console.log("state: "+state);
+  console.log("state.user: "+state.user);
   switch (action.type) {
     case 'ADD_POLL':
       return update(state, {polls: {$push: action.poll}});

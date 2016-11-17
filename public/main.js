@@ -17,8 +17,10 @@ store.dispatch(Actions.fetchPolls());
 store.dispatch(Actions.fetchUser());*/
 
 //const history = syncHistoryWithStore(browserHistory, store);
-const store = configureStore(browserHistory, window.__initialState__)
-const history = syncHistoryWithStore(browserHistory, store)
+const store = configureStore(browserHistory, window.__initialState__);
+const history = syncHistoryWithStore(browserHistory, store);
+
+console.log("store.user: "+JSON.stringify(store.user, null, 4));
 
 document.addEventListener('DOMContentLoaded', function(){
   render((
