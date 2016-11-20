@@ -8,6 +8,8 @@ import routes from '../app/routes';
 import { configureStore } from '../app/store';
 require('./main.styl');
 
+// todo http://redux.js.org/docs/advanced/ExampleRedditAPI.html
+
 /*const store = createStore(
 combineReducers({
   global: mainReducer,

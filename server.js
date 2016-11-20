@@ -195,6 +195,7 @@ mongo.connect(function(err){
         } else if (redirect) {
           res.redirect(redirect.pathname + redirect.search);
         } else if (props) {
+          console.log('store in match: '+store);
     			const content = renderToString(
             <Provider store={store}>
               <RouterContext {...props}/>
