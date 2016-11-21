@@ -10,11 +10,9 @@ class App extends React.Component {
     super(props);
   }
 
-  componentDidMount () {/*
-    if (!this.props.polls) {
-      this.props.dispatch(fetchPolls());
-    }
-    this.props.dispatch(fetchUser());*/
+  componentDidMount () {
+    this.props.dispatch(fetchPolls());
+    this.props.dispatch(fetchUser());
   }
 
   render() {
