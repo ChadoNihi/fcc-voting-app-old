@@ -56,15 +56,16 @@ mongo.connect(function(err){
     </html>
   )
 
-  app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
   app.use('/public', express.static('./public'));
   app.use(flash());
 
   app.use(session({
   	secret: 'secretClementine',
   	resave: false,
-  	saveUninitialized: true
+  	saveUninitialized: true,
+    cookie: { secure: false } //true requires https
   }));
 
   app.use(passport.initialize());
@@ -84,7 +85,7 @@ mongo.connect(function(err){
   app.route('/auth/twitter/callback')
   	.get(passport.authenticate('twitter', {
   		successRedirect: '/',
-  		failureRedirect: '/',
+  		failureRedirect: '/404',
   		failureFlash: true
   	}));
 
@@ -110,7 +111,7 @@ mongo.connect(function(err){
   });
 
   app.get('/user-api', (req, res) => {
-    console.log('get /user-api\nreq.user'+req.user);
+    console.log('get /user-api\nreq.user: '+req.user);
   	if (req.user) {
   		db.collection('voting_app_users').findOne(new ObjectId(req.user._id), (err, user)=> {
   			if (err) {

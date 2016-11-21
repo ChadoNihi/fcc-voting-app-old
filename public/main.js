@@ -22,8 +22,6 @@ store.dispatch(Actions.fetchUser());*/
 const store = configureStore(browserHistory, window.__initialState__);
 const history = syncHistoryWithStore(browserHistory, store);
 
-console.log("store.user: "+JSON.stringify(store.user, null, 4));
-
 document.addEventListener('DOMContentLoaded', function(){
   render((
     <Provider store={store}>

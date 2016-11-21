@@ -45,7 +45,6 @@ export const fetchUser = () => {
     return axios.get(appUrl+'user-api').then(response => {
         // Dispatch another action
         // to consume data
-        console.log('fetched user: '+response.data);
         dispatch(addUserSuccess(response.data));
       })
       .catch(error => {
