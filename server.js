@@ -58,15 +58,16 @@ mongo.connect(function(err){
   )
 
   app.use('/public', express.static('./public'));
+  app.use(cookieParser(process.env.SESSION_SECRET));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
-  app.use(cookieParser('secretClementine'));
   app.use(flash());
 
   app.use(session({
-  	secret: 'secretClementine',
+  	secret: process.env.SESSION_SECRET,
   	resave: false,
   	saveUninitialized: true,
+    cookie : { httpOnly: true, maxAge: 2419200000 }
     //cookie: { secure: false } //true requires https
   }));
 
