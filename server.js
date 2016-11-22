@@ -13,6 +13,7 @@ import {fetchPolls, fetchUser} from './app/actions';
 var express = require('express');
 var passport = require('passport');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var renderToString = require('react-dom/server').renderToString;
@@ -56,16 +57,17 @@ mongo.connect(function(err){
     </html>
   )
 
+  app.use('/public', express.static('./public'));
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
-  app.use('/public', express.static('./public'));
+  app.use(cookieParser('secretClementine'));
   app.use(flash());
 
   app.use(session({
   	secret: 'secretClementine',
   	resave: false,
   	saveUninitialized: true,
-    cookie: { secure: false } //true requires https
+    //cookie: { secure: false } //true requires https
   }));
 
   app.use(passport.initialize());
