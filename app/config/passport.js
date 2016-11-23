@@ -12,7 +12,7 @@ module.exports = function (passport) {
 	});
 
 	passport.deserializeUser(function (id, done) {
-		db.collection('voting_app_users').findOne(new ObjectId(id), function (err, user) {
+		db.collection('voting_app_users').findOne({new ObjectId(id)}, function (err, user) {
 			done(err, user);
 		});
 	});
