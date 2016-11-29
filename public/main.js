@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { browserHistory, Router } from 'react-router';
+import { browserHistory, match, Router } from 'react-router';
 import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'react-router-redux';
 
@@ -23,9 +23,11 @@ const store = configureStore(browserHistory, window.__initialState__);
 const history = syncHistoryWithStore(browserHistory, store);
 
 document.addEventListener('DOMContentLoaded', function(){
-  render((
-    <Provider store={store}>
-      <Router history={history} routes={routes} />
-    </Provider>
-  ), document.getElementById('root'));
+  match({ history, routes }, (error, redirectLocation, renderProps) => {
+    render((
+      <Provider store={store}>
+        <Router history={history} routes={routes} />
+      </Provider>
+    ), document.getElementById('root'));
+  });
 }, false);
