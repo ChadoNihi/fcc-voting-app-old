@@ -23,6 +23,7 @@ const store = configureStore(browserHistory, window.__initialState__);
 const history = syncHistoryWithStore(browserHistory, store);
 
 document.addEventListener('DOMContentLoaded', function(){
+  //todo delete match?
   match({ history, routes }, (error, redirectLocation, renderProps) => {
     render((
       <Provider store={store}>

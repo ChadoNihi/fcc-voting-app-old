@@ -9,3 +9,7 @@ user in db: ..., pollIds
 https://fcc-voting-app-efish.herokuapp.com/auth/twitter/callback
 
 https://github.com/yoshuawuyts/choo
+
+
+the problem, http://stackoverflow.com/questions/39420940/cookie-not-being-added-to-session
+universal boilerplate https://github.com/cloverfield-tools/universal-react-boilerplate
