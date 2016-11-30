@@ -24,11 +24,9 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 document.addEventListener('DOMContentLoaded', function(){
   //todo delete match?
-  match({ history, routes }, (error, redirectLocation, renderProps) => {
-    render((
-      <Provider store={store}>
-        <Router history={history} routes={routes} />
-      </Provider>
-    ), document.getElementById('root'));
-  });
+  render((
+    <Provider store={store}>
+      <Router history={history} routes={routes} />
+    </Provider>
+  ), document.getElementById('root'));
 }, false);
