@@ -187,7 +187,7 @@ mongo.connect(function(err){
   app.get('*', (req, res) => { //https://github.com/reactjs/react-router-redux/blob/master/examples/server/server.js
   	const memoryHistory = createMemoryHistory(req.url);
     const store = configureStore(memoryHistory);
-    const history = syncHistoryWithStore(memoryHistory, store);
+    //const history = syncHistoryWithStore(memoryHistory, store);
 
     Promise.all([
       store.dispatch(fetchUser()),
